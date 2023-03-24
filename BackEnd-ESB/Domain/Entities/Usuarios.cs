@@ -7,7 +7,6 @@ namespace ESB.Domain.Entities
     {
         public Usuarios()
         {
-            RegistroIncendios = new HashSet<RegistroIncendios>();
             UsuarioRoles = new HashSet<UsuarioRoles>();
         }
 
@@ -21,8 +20,6 @@ namespace ESB.Domain.Entities
         public DateTime? UltimoAcceso { get; set; }
 
         public bool Estado { get; set; }
-
-        public virtual ICollection<RegistroIncendios> RegistroIncendios { get; set; }
         public virtual ICollection<UsuarioRoles> UsuarioRoles { get; set; }
     }
 }

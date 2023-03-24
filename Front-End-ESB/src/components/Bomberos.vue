@@ -45,31 +45,6 @@
                             </v-card-actions>
                         </v-card>
                     </v-dialog>
-                    <v-dialog v-model="adModal" max-width="290">
-                        <v-card>
-                            <v-card-title class="headline" v-if="adAccion==1">¿Activar Item?</v-card-title>
-                            <v-card-title class="headline" v-if="adAccion==2">¿Desactivar Item?</v-card-title>
-                            <v-card-text>
-                                Estás a punto de 
-                                <span v-if="adAccion==1">Activar </span>
-                                <span v-if="adAccion==2">Desactivar </span>
-                                el ítem {{ adNombre }}
-                            </v-card-text>
-                            <v-card-actions>
-                                <v-spacer></v-spacer>
-                                <v-btn color="green darken-1" flat="flat" @click="activarDesactivarCerrar">
-                                    Cancelar
-                                </v-btn>
-                                <v-btn v-if="adAccion==1" color="orange darken-4" flat="flat" @click="activar">
-                                    Activar
-                                </v-btn>
-                                <v-btn v-if="adAccion==2" color="orange darken-4" flat="flat" @click="desactivar">
-                                    Desactivar
-                                </v-btn>
-                            </v-card-actions>
-
-                        </v-card>
-                    </v-dialog>
                 </v-toolbar>
             <v-data-table
                 :headers="headers"
@@ -174,9 +149,9 @@
             },
             limpiar(){
                 this.id="";
-                this.nombre=item.nombre;
-                this.apellido=item.apellido;
-                this.fechaNacimiento=item.fechaNacimiento;
+                this.nombre="";
+                this.apellido="";
+                this.fechaNacimiento="";
                 this.editedIndex=-1;
             },
             guardar () {
@@ -187,7 +162,7 @@
                     //Código para editar
                     //Código para guardar
                     let me=this;
-                    axios.put(`/api/bomberos/`,{
+                    axios.put(`api/Bomberos?id=${this.id}`,{
                         'id':me.id, 
                         'nombre': me.nombre,
                         'apellido': me.apellido,
@@ -244,30 +219,6 @@
             activarDesactivarCerrar(){
                 this.adModal=0;
             },
-    /*         activar(){
-                let me=this;
-                axios.put('api/Categorias/Activar/'+this.adId,{}).then(function(response){
-                    me.adModal=0;
-                    me.adAccion=0;
-                    me.adNombre="";
-                    me.adId="";
-                    me.listar();                       
-                }).catch(function(error){
-                    console.log(error);
-                });
-            }, */
-        /*     desactivar(){
-                let me=this;
-                axios.put('api/Categorias/Desactivar/'+this.adId,{}).then(function(response){
-                    me.adModal=0;
-                    me.adAccion=0;
-                    me.adNombre="";
-                    me.adId="";
-                    me.listar();                       
-                }).catch(function(error){
-                    console.log(error);
-                });
-            } */
         }        
     }
 </script>

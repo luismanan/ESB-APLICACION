@@ -35,19 +35,11 @@ namespace ESB.Infrastructure.Data.Configuration
 
                 entity.Property(e => e.IdBomberoCargo).HasColumnName("Id_BomberoCargo");
 
-                entity.Property(e => e.IdUsuariosRegistros).HasColumnName("Id_Usuarios_registros");
-
                 entity.HasOne(d => d.IdBomberoCargoNavigation)
                     .WithMany(p => p.RegistroIncendios)
                     .HasForeignKey(d => d.IdBomberoCargo)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Registro_Incendios_Bomberos");
-
-                entity.HasOne(d => d.IdUsuariosRegistrosNavigation)
-                    .WithMany(p => p.RegistroIncendios)
-                    .HasForeignKey(d => d.IdUsuariosRegistros)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Registro_Incendios_Usuarios");
             });
 
             modelBuilder.Entity<Roles>(entity =>
@@ -90,6 +82,10 @@ namespace ESB.Infrastructure.Data.Configuration
                     .IsRequired()
                     .HasMaxLength(250);
 
+                entity.Property(e => e.CorreoElectronico)
+                    .IsRequired()
+                    .HasMaxLength(250);
+
                 entity.Property(e => e.FechaCreacion).HasColumnType("datetime");
 
                 entity.Property(e => e.Nombre)
@@ -98,6 +94,7 @@ namespace ESB.Infrastructure.Data.Configuration
 
                 entity.Property(e => e.UltimoAcceso).HasColumnType("datetime");
             });
+
 
         }
 

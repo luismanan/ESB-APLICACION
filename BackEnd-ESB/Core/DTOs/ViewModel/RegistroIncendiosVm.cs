@@ -12,6 +12,5 @@ namespace ESB.Application.DTOs.ViewModel
         public string Direccion { get; set; }
         public int IdBomberoCargo { get; set; }
         public DateTime FechaCreacion { get; set; }
-        public int IdUsuariosRegistros { get; set; }
     }
 }

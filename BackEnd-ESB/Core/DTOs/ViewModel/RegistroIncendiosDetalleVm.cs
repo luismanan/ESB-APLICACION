@@ -10,6 +10,7 @@ namespace ESB.Application.DTOs.ViewModel
     {
         public int Id { get; set; }
         public string? Direccion { get; set; }
+        public int IdBomberoCargo { get; set; }
         public string? BomberoCargo { get; set; }
         public DateTime FechaCreacion { get; set; }
         //public int? Cantidad { get; set; }   

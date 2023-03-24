@@ -40,14 +40,14 @@ namespace ESB.Infrastructure.Services
 
         public async Task<Response<RegistroIncendiosVm>> InsertAsync(RegistroIncendiosDto dto)
         {
-            var User = base.GetLoggerUserId();
+            //var User = base.GetLoggerUserId();
 
             var valResult = _validator.Validate(dto);
             if (!valResult.IsValid) throw new ApiValidationException(valResult.Errors);
 
             var obj = _mapper.Map<RegistroIncendios>(dto);
             obj.FechaCreacion = DateTime.Now;
-            obj.IdUsuariosRegistros = User;
+            //obj.IdUsuariosRegistros = User;
 
 
 
@@ -66,6 +66,8 @@ namespace ESB.Infrastructure.Services
             var obj = _mapper.Map<RegistroIncendios>(dto);
 
             obj.Id = objDb.Id;
+            obj.FechaCreacion =objDb.FechaCreacion;
+            //obj.IdUsuariosRegistros = objDb.IdUsuariosRegistros;    
             //Note: You can automap the object or map manualy, as this code down.
 
             //#region Mapping 
@@ -117,15 +119,13 @@ namespace ESB.Infrastructure.Services
             foreach (var item in data)
             {
                 var NombreBombero = await _BomberosRepo.WhereAsync(x => x.Id == item.IdBomberoCargo);
-                //var total = await _RegistroIncendiosRepo.WhereAllAsync(x => x.IdBomberoCargo == item.IdBomberoCargo);
-                //int Cantidad2 = total.Count();
                 var info2 = new RegistroIncendiosDetalleVm()
                 {
                     Id = item.Id,
                     Direccion = item.Direccion,
+                    IdBomberoCargo = item.IdBomberoCargo,
                     BomberoCargo = NombreBombero.Nombre + " " + NombreBombero.Apellido,
                     FechaCreacion = item.FechaCreacion,
-                    //Cantidad = Cantidad2
                 };
                 _return.Add(info2);
             }  

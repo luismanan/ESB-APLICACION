@@ -2,7 +2,7 @@
     <v-layout align-start>
         <v-flex>
             <v-toolbar flat color="white">
-                <v-toolbar-title>Clientes</v-toolbar-title>
+                <v-toolbar-title>Registro de Incendios</v-toolbar-title>
                     <v-divider
                     class="mx-2"
                     inset
@@ -20,31 +20,15 @@
                 
                             <v-card-text>
                             <v-container grid-list-md>
-                                <v-layout wrap>
+                                <v-layout wrap>                          
                                 <v-flex xs12 sm12 md12>
-                                    <v-text-field v-model="nombre" label="Nombre">
-                                    </v-text-field>
-                                </v-flex>
-                                <v-flex xs12 sm6 md6>
-                                    <v-select v-model="tipo_documento"
-                                    :items="documentos" label="Tipo Documento">
-                                    </v-select>
-                                </v-flex>
-                                <v-flex xs12 sm6 md6>
-                                    <v-text-field v-model="num_documento" label="Número Documento">
-                                    </v-text-field>
+                                    <v-text-field v-model="direccion" label="direccion"></v-text-field>
                                 </v-flex>
                                 <v-flex xs12 sm12 md12>
-                                    <v-text-field v-model="direccion" label="Dirección">
-                                    </v-text-field>
+                                    <v-text-field v-model="bomberoCargo" label="bomberoCargo"></v-text-field>
                                 </v-flex>
-                                <v-flex xs12 sm6 md6>
-                                    <v-text-field v-model="telefono" label="Teléfono">
-                                    </v-text-field>
-                                </v-flex>
-                                <v-flex xs12 sm6 md6>
-                                    <v-text-field v-model="email" label="Email">
-                                    </v-text-field>
+                                <v-flex xs12 sm12 md12>
+                                    <v-text-field type="date" v-model="fechaCreacion" label="fechaCreacion"></v-text-field>
                                 </v-flex>
                                 <v-flex xs12 sm12 md12 v-show="valida">
                                     <div class="red--text" v-for="v in validaMensaje" :key="v" v-text="v">
@@ -64,7 +48,7 @@
                 </v-toolbar>
             <v-data-table
                 :headers="headers"
-                :items="clientes"
+                :items="RegistroIncendio"
                 :search="search"
                 class="elevation-1"
             >
@@ -78,13 +62,10 @@
                         edit
                         </v-icon>
                     </td>
-                    <td>{{ props.item.nombre }}</td>
-                    <td>{{ props.item.tipo_persona }}</td>
-                    <td>{{ props.item.tipo_documento }}</td>
-                    <td>{{ props.item.num_documento }}</td>
+                    <td>{{ props.item.id }}</td>
                     <td>{{ props.item.direccion }}</td>
-                    <td>{{ props.item.telefono }}</td>
-                    <td>{{ props.item.email }}</td>
+                    <td>{{ props.item.bomberoCargo }}</td>
+                    <td>{{ props.item.fechaCreacion }}</td>
                 </template>
                 <template slot="no-data">
                 <v-btn color="primary" @click="listar">Resetear</v-btn>
@@ -98,28 +79,22 @@
     export default {
         data(){
             return {
-                clientes:[],                
+                RegistroIncendio:[],                
                 dialog: false,
                 headers: [
                     { text: 'Opciones', value: 'opciones', sortable: false },
-                    { text: 'Nombre', value: 'nombre' },
-                    { text: 'Tipo Persona', value: 'tipo_persona' },
-                    { text: 'Tipo Documento', value: 'tipo_documento' },
-                    { text: 'Número Documento', value: 'num_documento', sortable: false  },
-                    { text: 'Dirección', value: 'direccion', sortable: false  },
-                    { text: 'Teléfono', value: 'telefono', sortable: false  },
-                    { text: 'Email', value: 'email', sortable: false  }                
+                    { text: 'Id', value: 'id', sortable: false },
+                    { text: 'Direccion', value: 'direccion' },
+                    { text: 'BomberoCargo', value: 'bomberoCargo' },
+                    { text: 'FechaCreacion', value: 'fechaCreacion' },
+                          
                 ],
                 search: '',
                 editedIndex: -1,
                 id: '',
-                nombre:'',
-                tipo_documento: '',
-                documentos: ['DNI','RUC','PASAPORTE','CEDULA'],
-                num_documento: '',
                 direccion: '',
-                telefono: '',
-                email: '',
+                bomberoCargo: '',
+                fechaCreacion: '',
                 valida: 0,
                 validaMensaje:[],
                 adModal: 0,
@@ -130,7 +105,7 @@
         },
         computed: {
             formTitle () {
-                return this.editedIndex === -1 ? 'Nuevo cliente' : 'Actualizar cliente'
+                return this.editedIndex === -1 ? 'Nueva Registro de Incendios' : 'Actualizar Registro de Incendios'
             }
         },
 
@@ -146,36 +121,38 @@
         methods:{
             listar(){
                 let me=this;
-                axios.get('api/Personas/ListarClientes').then(function(response){
+                axios.get('api/RegistroIncendios/GetListAllasync').then(function(response){
                     //console.log(response);
-                    me.clientes=response.data;
+                    me.RegistroIncendio=response.data.data;
+                    console.log(data.data);
                 }).catch(function(error){
                     console.log(error);
                 });
             },
             editItem (item) {
-                this.id=item.idpersona;
-                this.nombre=item.nombre;
-                this.tipo_documento=item.tipo_documento;
-                this.num_documento=item.num_documento;
+                this.id=item.id;
                 this.direccion=item.direccion;
-                this.telefono=item.telefono;
-                this.email=item.email;
+                this.idBomberoCargo=item.idBomberoCargo;
+                this.bomberoCargo=item.bomberoCargo;
+                this.fechaCreacion=item.fechaCreacion;
                 this.editedIndex=1;
                 this.dialog = true
             },
+
+            deleteItem (item) {
+                const index = this.desserts.indexOf(item)
+                confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1)
+            },
+
             close () {
                 this.dialog = false;
                 this.limpiar();
             },
             limpiar(){
                 this.id="";
-                this.nombre="";
-                this.tipo_documento="";
-                this.num_documento="";
                 this.direccion="";
-                this.telefono="";
-                this.email="";
+                this.bomberoCargo="";
+                this.fechaCreacion="";
                 this.editedIndex=-1;
             },
             guardar () {
@@ -184,16 +161,12 @@
                 }
                 if (this.editedIndex > -1) {
                     //Código para editar
+                    //Código para guardar
                     let me=this;
-                    axios.put('api/Personas/Actualizar',{
-                        'idpersona':me.id,
-                        'tipo_persona':'Cliente',
-                        'nombre':me.nombre,
-                        'tipo_documento': me.tipo_documento,
-                        'num_documento':me.num_documento,
-                        'direccion':me.direccion,
-                        'telefono': me.telefono,
-                        'email':me.email                       
+                    axios.put(`api/RegistroIncendios?id=${this.id}`,{
+                        'id':me.id, 
+                        'direccion': me.direccion,
+                        'idBomberoCargo': me.idBomberoCargo                
                     }).then(function(response){
                         me.close();
                         me.listar();
@@ -204,14 +177,10 @@
                 } else {
                     //Código para guardar
                     let me=this;
-                    axios.post('api/Personas/Crear',{
-                        'tipo_persona':'Cliente',
-                        'nombre':me.nombre,
-                        'tipo_documento': me.tipo_documento,
-                        'num_documento':me.num_documento,
-                        'direccion':me.direccion,
-                        'telefono': me.telefono,
-                        'email':me.email
+                    axios.post('api/RegistroIncendios',{
+                        'nombre': me.nombre,
+                        'apellido': me.apellido,
+                        'fechaNacimiento': me.fechaNacimiento
                     }).then(function(response){
                         me.close();
                         me.listar();
@@ -225,17 +194,32 @@
                 this.valida=0;
                 this.validaMensaje=[];
 
-                if (this.nombre.length<3 || this.nombre.length>100){
-                    this.validaMensaje.push("El nombre debe tener más de 3 caracteres y menos de 100 caracteres.");
-                }
-                if (!this.tipo_documento){
-                    this.validaMensaje.push("Seleccione un tipo documento.");
+                if (this.nombre.length<3 || this.nombre.length>50){
+                    this.validaMensaje.push("El nombre debe tener más de 3 caracteres y menos de 50 caracteres");
                 }
                 if (this.validaMensaje.length){
                     this.valida=1;
                 }
                 return this.valida;
-            }
+            },
+            activarDesactivarMostrar(accion,item){
+                this.adModal=1;
+                this.adNombre=item.nombre;
+                this.adId=item.id;                
+                if (accion==1){
+                    this.adAccion=1;
+                }
+                else if (accion==2){
+                    this.adAccion=2;
+                }
+                else{
+                    this.adModal=0;
+                }
+            },
+            activarDesactivarCerrar(){
+                this.adModal=0;
+            },
         }        
     }
 </script>
+
