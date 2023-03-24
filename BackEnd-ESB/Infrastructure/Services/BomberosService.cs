@@ -58,18 +58,6 @@ namespace ESB.Infrastructure.Services
             var obj = _mapper.Map<Bomberos>(dto);
 
             obj.Id = objDb.Id;
-            //Note: You can automap the object or map manualy, as this code down.
-
-            //#region Mapping 
-            //obj.Name = dto.Name;
-            //obj.LasName = dto.LasName;
-            //obj.Address = dto.Address;
-            //obj.Status = dto.Status;
-            //obj.Note = dto.Note;
-            //obj.YearOfbirth = dto.YearOfbirth;
-            //obj.MonthOfbirth = dto.MonthOfbirth;
-            //obj.DayOfbirth = dto.DayOfbirth;
-            //#endregion Mapping
 
             return new Response<BomberoVm>(_mapper.Map<BomberoVm>(await _BomberosRepo.UpdateAsync(obj)));
         }
@@ -84,29 +72,20 @@ namespace ESB.Infrastructure.Services
 
             return new Response<BomberoVm>(_mapper.Map<BomberoVm>(data));
         }
-
-
-
         public async Task<PagedResponse<IList<BomberoVm>>> GetPagedListAsync(int pageNumber, int pageSize, string filter = null)
         {
-
             List<Expression<Func<Bomberos, bool>>> queryFilter = new List<Expression<Func<Bomberos, bool>>>();
             List<Expression<Func<Bomberos, Object>>> includes = new List<Expression<Func<Bomberos, Object>>>();
-
-
-
 
             //if (filter != null || filter.Length > 0)
             //{
             //    queryFilter.Add(x => x.Id();
             //}
-
             var list = await _BomberosRepo.GetPagedList(pageNumber, pageSize, queryFilter, includes: includes);
             if (list == null || list.Data.Count == 0)
             {
                 throw new KeyNotFoundException($"Roles not found");
             }
-
             return new PagedResponse<IList<BomberoVm>>(_mapper.Map<IList<BomberoVm>>(list.Data), list.PageNumber, list.PageSize, list.TotalCount);
         }
 

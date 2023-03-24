@@ -22,13 +22,13 @@
                             <v-container grid-list-md>
                                 <v-layout wrap>                          
                                 <v-flex xs12 sm12 md12>
-                                    <v-text-field v-model="direccion" label="direccion"></v-text-field>
+                                    <v-text-field v-model="direccion" label="Direccion"></v-text-field>
                                 </v-flex>
                                 <v-flex xs12 sm12 md12>
-                                    <v-text-field v-model="bomberoCargo" label="bomberoCargo"></v-text-field>
+                                    <v-text-field v-model="bomberoCargo" label="BomberoCargo"></v-text-field>
                                 </v-flex>
                                 <v-flex xs12 sm12 md12>
-                                    <v-text-field type="date" v-model="fechaCreacion" label="fechaCreacion"></v-text-field>
+                                    <v-text-field type="date" v-model="fechaCreacion" label="FechaCreacion"></v-text-field>
                                 </v-flex>
                                 <v-flex xs12 sm12 md12 v-show="valida">
                                     <div class="red--text" v-for="v in validaMensaje" :key="v" v-text="v">

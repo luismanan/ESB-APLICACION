@@ -19,22 +19,19 @@ namespace ESB.Api.Controllers
             _UsuariosService = UsuariosService;
         }
 
-        //[HttpGet("{id}")]
-        //[ProducesResponseType(typeof(Response<UsuariosVm>), 200)]
-        //public async Task<IActionResult> GetAsync(int id)
-        //{
-        //    return Ok(await _UsuariosService.GetByIdAsync(id));
-        //}
+        [HttpGet("{id}")]
+        [ProducesResponseType(typeof(Response<UsuariosVm>), 200)]
+        public async Task<IActionResult> GetAsync(int id)
+        {
+            return Ok(await _UsuariosService.GetByIdAsync(id));
+        }
 
-        //[HttpGet("")]
-        //[ProducesResponseType(typeof(PagedResponse<IList<UsuarioRolesVm>>), 200)]
-        //public async Task<IActionResult> GetAsync(int pageNumber, int pageSize, string filter = "")
-        //{
-        
-
-
-        //    return Ok(await _UsuariosService.GetPagedListAsync(pageNumber, pageSize, filter));
-        //}
+        [HttpGet("")]
+        [ProducesResponseType(typeof(PagedResponse<IList<UsuariosVm>>), 200)]
+        public async Task<IActionResult> GetAsync(int pageNumber, int pageSize, string filter = "")
+        {
+            return Ok(await _UsuariosService.GetPagedListAsync(pageNumber, pageSize, filter));
+        }
 
         [HttpPost]
         [ProducesResponseType(typeof(Response<IList<UsuariosVm>>), 200)]
@@ -42,13 +39,12 @@ namespace ESB.Api.Controllers
         {
             return Ok(await _UsuariosService.RegisterAsync(obj));
         }
-
-        //[HttpPut]
-        //[ProducesResponseType(typeof(Response<IList<UsuarioRolesVm>>), 200)]
-        //public async Task<IActionResult> PutAsync(int id, [FromBody] UsuarioRolesDto obj)
-        //{
-        //    return Ok(await _UsuariosService.UpdateAsync(id, obj));
-        //}
+        [HttpPut]
+        [ProducesResponseType(typeof(Response<IList<UsuariosVm>>), 200)]
+        public async Task<IActionResult> PutAsync(int id, [FromBody] UsuariosDto obj)
+        {
+            return Ok(await _UsuariosService.UpdateAsync(id, obj));
+        }
 
     }
 }

@@ -46,6 +46,16 @@
                 </v-list-tile-title>
               </v-list-tile-content>
             </v-list-tile>
+            <v-list-tile :to="{ name: 'BomberoDestacado'}">
+              <v-list-tile-action>
+                <v-icon>table_chart</v-icon>
+              </v-list-tile-action>
+              <v-list-tile-content>
+                <v-list-tile-title>
+                  Bombero destacado
+                </v-list-tile-title>
+              </v-list-tile-content>
+            </v-list-tile>
 
           </v-list-group>
         </template>

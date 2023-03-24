@@ -22,13 +22,13 @@
                             <v-container grid-list-md>
                                 <v-layout wrap>                          
                                 <v-flex xs12 sm12 md12>
-                                    <v-text-field v-model="nombre" label="nombre"></v-text-field>
+                                    <v-text-field v-model="nombre" label="Nombre"></v-text-field>
                                 </v-flex>
                                 <v-flex xs12 sm12 md12>
-                                    <v-text-field v-model="apellido" label="apellido"></v-text-field>
+                                    <v-text-field v-model="apellido" label="Apellido"></v-text-field>
                                 </v-flex>
                                 <v-flex xs12 sm12 md12>
-                                    <v-text-field type="date" v-model="fechaNacimiento" label="fechaNacimiento"></v-text-field>
+                                    <v-text-field type="date" v-model="fechaNacimiento" label="FechaNacimiento"></v-text-field>
                                 </v-flex>
                                 <v-flex xs12 sm12 md12 v-show="valida">
                                     <div class="red--text" v-for="v in validaMensaje" :key="v" v-text="v">

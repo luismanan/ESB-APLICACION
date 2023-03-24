@@ -2,7 +2,7 @@
     <v-layout align-start>
         <v-flex>
             <v-toolbar flat color="white">
-                <v-toolbar-title>Bomberos</v-toolbar-title>
+                <v-toolbar-title>Roles</v-toolbar-title>
                     <v-divider
                     class="mx-2"
                     inset
@@ -22,13 +22,7 @@
                             <v-container grid-list-md>
                                 <v-layout wrap>                          
                                 <v-flex xs12 sm12 md12>
-                                    <v-text-field v-model="nombre" label="nombre"></v-text-field>
-                                </v-flex>
-                                <v-flex xs12 sm12 md12>
-                                    <v-text-field v-model="apellido" label="apellido"></v-text-field>
-                                </v-flex>
-                                <v-flex xs12 sm12 md12>
-                                    <v-text-field type="date" v-model="fechaNacimiento" label="fechaNacimiento"></v-text-field>
+                                    <v-text-field v-model="nombreRoles" label="Nombre de Roles"></v-text-field>
                                 </v-flex>
                                 <v-flex xs12 sm12 md12 v-show="valida">
                                     <div class="red--text" v-for="v in validaMensaje" :key="v" v-text="v">
@@ -48,7 +42,7 @@
                 </v-toolbar>
             <v-data-table
                 :headers="headers"
-                :items="bomberos"
+                :items="roles"
                 :search="search"
                 class="elevation-1"
             >
@@ -63,9 +57,7 @@
                         </v-icon>
                     </td>
                     <td>{{ props.item.id }}</td>
-                    <td>{{ props.item.nombre }}</td>
-                    <td>{{ props.item.apellido }}</td>
-                    <td>{{ props.item.fechaNacimiento }}</td>
+                    <td>{{ props.item.nombreRoles }}</td>
                 </template>
                 <template slot="no-data">
                 <v-btn color="primary" @click="listar">Resetear</v-btn>
@@ -79,22 +71,17 @@
     export default {
         data(){
             return {
-                bomberos:[],                
+                roles:[],                
                 dialog: false,
                 headers: [
                     { text: 'Opciones', value: 'opciones', sortable: false }, 
                     { text: 'Id', value: 'id' },
-                    { text: 'Nombre', value: 'nombre' },
-                    { text: 'Apellido', value: 'apellido' },
-                    { text: 'FechaNacimiento', value: 'fechaNacimiento' },
-                          
+                    { text: 'Nombre de Roles', value: 'nombreRoles' },                       
                 ],
                 search: '',
                 editedIndex: -1,
                 id: '',
-                nombre: '',
-                apellido: '',
-                fechaNacimiento: '',
+                nombreRoles: '',
                 valida: 0,
                 validaMensaje:[],
                 adModal: 0,
@@ -105,7 +92,7 @@
         },
         computed: {
             formTitle () {
-                return this.editedIndex === -1 ? 'Nueva Bombero' : 'Actualizar bombero'
+                return this.editedIndex === -1 ? 'Nuevo Rol' : 'Actualizar Rol'
             }
         },
 
@@ -121,9 +108,9 @@
         methods:{
             listar(){
                 let me=this;
-                axios.get('api/Bomberos').then(function(response){
+                axios.get('api/Roles').then(function(response){
                     //console.log(response);
-                    me.bomberos=response.data.data;
+                    me.roles=response.data.data;
                     console.log(data.data);
                 }).catch(function(error){
                     console.log(error);
@@ -131,9 +118,7 @@
             },
             editItem (item) {
                 this.id=item.id;
-                this.nombre=item.nombre;
-                this.apellido=item.apellido;
-                this.fechaNacimiento=item.fechaNacimiento;
+                this.nombreRoles=item.nombreRoles;
                 this.editedIndex=1;
                 this.dialog = true
             },
@@ -149,9 +134,7 @@
             },
             limpiar(){
                 this.id="";
-                this.nombre="";
-                this.apellido="";
-                this.fechaNacimiento="";
+                this.nombreRoles="";
                 this.editedIndex=-1;
             },
             guardar () {
@@ -162,11 +145,9 @@
                     //Código para editar
                     //Código para guardar
                     let me=this;
-                    axios.put(`api/Bomberos?id=${this.id}`,{
+                    axios.put(`api/Roles?id=${this.id}`,{
                         'id':me.id, 
-                        'nombre': me.nombre,
-                        'apellido': me.apellido,
-                        'fechaNacimiento': me.fechaNacimiento
+                        'nombreRoles': me.nombreRoles,
                     }).then(function(response){
                         me.close();
                         me.listar();
@@ -177,10 +158,8 @@
                 } else {
                     //Código para guardar
                     let me=this;
-                    axios.post('api/Bomberos',{
-                        'nombre': me.nombre,
-                        'apellido': me.apellido,
-                        'fechaNacimiento': me.fechaNacimiento
+                    axios.post('api/Roles',{
+                        'nombreRoles': me.nombreRoles,
                     }).then(function(response){
                         me.close();
                         me.listar();
@@ -194,7 +173,7 @@
                 this.valida=0;
                 this.validaMensaje=[];
 
-                if (this.nombre.length<3 || this.nombre.length>50){
+                if (this.nombreRoles.length<3 || this.nombreRoles.length>50){
                     this.validaMensaje.push("El nombre debe tener más de 3 caracteres y menos de 50 caracteres");
                 }
                 if (this.validaMensaje.length){
@@ -204,7 +183,7 @@
             },
             activarDesactivarMostrar(accion,item){
                 this.adModal=1;
-                this.adNombre=item.nombre;
+                this.adNombre=item.nombreRoles;
                 this.adId=item.id;                
                 if (accion==1){
                     this.adAccion=1;

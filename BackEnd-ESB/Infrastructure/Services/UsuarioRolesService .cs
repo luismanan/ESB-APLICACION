@@ -60,18 +60,6 @@ namespace ESB.Infrastructure.Services
             var obj = _mapper.Map<UsuarioRoles>(dto);
 
             obj.Id = objDb.Id;
-            //Note: You can automap the object or map manualy, as this code down.
-
-            //#region Mapping 
-            //obj.Name = dto.Name;
-            //obj.LasName = dto.LasName;
-            //obj.Address = dto.Address;
-            //obj.Status = dto.Status;
-            //obj.Note = dto.Note;
-            //obj.YearOfbirth = dto.YearOfbirth;
-            //obj.MonthOfbirth = dto.MonthOfbirth;
-            //obj.DayOfbirth = dto.DayOfbirth;
-            //#endregion Mapping
 
             return new Response<UsuarioRolesVm>(_mapper.Map<UsuarioRolesVm>(await _UsuarioRoleRepo.UpdateAsync(obj)));
         }

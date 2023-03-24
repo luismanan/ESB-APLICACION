@@ -67,19 +67,6 @@ namespace ESB.Infrastructure.Services
 
             obj.Id = objDb.Id;
             obj.FechaCreacion =objDb.FechaCreacion;
-            //obj.IdUsuariosRegistros = objDb.IdUsuariosRegistros;    
-            //Note: You can automap the object or map manualy, as this code down.
-
-            //#region Mapping 
-            //obj.Name = dto.Name;
-            //obj.LasName = dto.LasName;
-            //obj.Address = dto.Address;
-            //obj.Status = dto.Status;
-            //obj.Note = dto.Note;
-            //obj.YearOfbirth = dto.YearOfbirth;
-            //obj.MonthOfbirth = dto.MonthOfbirth;
-            //obj.DayOfbirth = dto.DayOfbirth;
-            //#endregion Mapping
 
             return new Response<RegistroIncendiosVm>(_mapper.Map<RegistroIncendiosVm>(await _RegistroIncendiosRepo.UpdateAsync(obj)));
         }

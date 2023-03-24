@@ -5,7 +5,7 @@ import Bomberos from './components/Bomberos.vue'
 import RegistroIncendio from './components/RegistroIncendio.vue'
 import Rol from './components/Rol.vue'
 import Usuario from './components/Usuario.vue'
-import Proveedor from './components/Proveedor.vue'
+import BomberoDestacado from './components/BomberoDestacado.vue'
 
 Vue.use(Router)
 
@@ -39,9 +39,9 @@ export default new Router({
       component: Usuario
     },
     {
-      path: '/proveedores',
-      name: 'proveedores',
-      component: Proveedor
+      path: '/BomberoDestacado',
+      name: 'BomberoDestacado',
+      component: BomberoDestacado
     }
   ]
 })
