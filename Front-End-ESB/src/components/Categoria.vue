@@ -20,18 +20,15 @@
                 
                             <v-card-text>
                             <v-container grid-list-md>
-                                <v-layout wrap>
+                                <v-layout wrap>                          
                                 <v-flex xs12 sm12 md12>
-                                    <v-text-field v-model="nombre" label="id"></v-text-field>
+                                    <v-text-field v-model="nombre" label="nombre"></v-text-field>
                                 </v-flex>
                                 <v-flex xs12 sm12 md12>
-                                    <v-text-field v-model="descripcion" label="nombre"></v-text-field>
+                                    <v-text-field v-model="apellido" label="apellido"></v-text-field>
                                 </v-flex>
                                 <v-flex xs12 sm12 md12>
-                                    <v-text-field v-model="descripcion" label="apellido"></v-text-field>
-                                </v-flex>
-                                <v-flex xs12 sm12 md12>
-                                    <v-text-field v-model="descripcion" label="fechaNacimiento"></v-text-field>
+                                    <v-text-field type="date" v-model="fechaNacimiento" label="fechaNacimiento"></v-text-field>
                                 </v-flex>
                                 <v-flex xs12 sm12 md12 v-show="valida">
                                     <div class="red--text" v-for="v in validaMensaje" :key="v" v-text="v">
@@ -76,7 +73,7 @@
                 </v-toolbar>
             <v-data-table
                 :headers="headers"
-                :items="categorias"
+                :items="bomberos"
                 :search="search"
                 class="elevation-1"
             >
@@ -89,35 +86,11 @@
                         >
                         edit
                         </v-icon>
-                        <template v-if="props.item.condicion">
-                            <v-icon
-                            small
-                            @click="activarDesactivarMostrar(2,props.item)"
-                            >
-                            block
-                            </v-icon>
-                        </template>
-                        <template v-else>
-                            <v-icon
-                            small
-                            @click="activarDesactivarMostrar(1,props.item)"
-                            >
-                            check
-                            </v-icon>
-                        </template>
                     </td>
                     <td>{{ props.item.id }}</td>
                     <td>{{ props.item.nombre }}</td>
                     <td>{{ props.item.apellido }}</td>
                     <td>{{ props.item.fechaNacimiento }}</td>
-                    <td>
-                        <div v-if="props.item.condicion">
-                            <span class="blue--text">Activo</span>
-                        </div>
-                        <div v-else>
-                            <span class="red--text">Inactivo</span>
-                        </div>
-                    </td>
                 </template>
                 <template slot="no-data">
                 <v-btn color="primary" @click="listar">Resetear</v-btn>
@@ -131,22 +104,22 @@
     export default {
         data(){
             return {
-                categorias:[],                
+                bomberos:[],                
                 dialog: false,
                 headers: [
-                  { text: 'Opciones', value: 'opciones', sortable: false }, 
+                    { text: 'Opciones', value: 'opciones', sortable: false }, 
                     { text: 'Id', value: 'id' },
                     { text: 'Nombre', value: 'nombre' },
                     { text: 'Apellido', value: 'apellido' },
                     { text: 'FechaNacimiento', value: 'fechaNacimiento' },
-               /*      { text: 'fechaNacimiento', value: 'fechaNacimiento', sortable: false  },
-                    { text: 'Estado', value: 'condicion', sortable: false  }  */               
+                          
                 ],
                 search: '',
                 editedIndex: -1,
                 id: '',
                 nombre: '',
-                descripcion: '',
+                apellido: '',
+                fechaNacimiento: '',
                 valida: 0,
                 validaMensaje:[],
                 adModal: 0,
@@ -175,16 +148,17 @@
                 let me=this;
                 axios.get('api/Bomberos').then(function(response){
                     //console.log(response);
-                    me.categorias=response.data.data;
+                    me.bomberos=response.data.data;
                     console.log(data.data);
                 }).catch(function(error){
                     console.log(error);
                 });
             },
             editItem (item) {
-                this.id=item.idcategoria;
+                this.id=item.id;
                 this.nombre=item.nombre;
-                this.descripcion=item.descripcion;
+                this.apellido=item.apellido;
+                this.fechaNacimiento=item.fechaNacimiento;
                 this.editedIndex=1;
                 this.dialog = true
             },
@@ -200,8 +174,9 @@
             },
             limpiar(){
                 this.id="";
-                this.nombre="";
-                this.descripcion="";
+                this.nombre=item.nombre;
+                this.apellido=item.apellido;
+                this.fechaNacimiento=item.fechaNacimiento;
                 this.editedIndex=-1;
             },
             guardar () {
@@ -212,10 +187,11 @@
                     //Código para editar
                     //Código para guardar
                     let me=this;
-                    axios.put('api/Categorias/Actualizar',{
-                        'idcategoria':me.id,
+                    axios.put(`/api/bomberos/`,{
+                        'id':me.id, 
                         'nombre': me.nombre,
-                        'descripcion': me.descripcion
+                        'apellido': me.apellido,
+                        'fechaNacimiento': me.fechaNacimiento
                     }).then(function(response){
                         me.close();
                         me.listar();
@@ -226,9 +202,10 @@
                 } else {
                     //Código para guardar
                     let me=this;
-                    axios.post('api/Categorias/Crear',{
+                    axios.post('api/Bomberos',{
                         'nombre': me.nombre,
-                        'descripcion': me.descripcion
+                        'apellido': me.apellido,
+                        'fechaNacimiento': me.fechaNacimiento
                     }).then(function(response){
                         me.close();
                         me.listar();
@@ -253,7 +230,7 @@
             activarDesactivarMostrar(accion,item){
                 this.adModal=1;
                 this.adNombre=item.nombre;
-                this.adId=item.idcategoria;                
+                this.adId=item.id;                
                 if (accion==1){
                     this.adAccion=1;
                 }
@@ -267,7 +244,7 @@
             activarDesactivarCerrar(){
                 this.adModal=0;
             },
-            activar(){
+    /*         activar(){
                 let me=this;
                 axios.put('api/Categorias/Activar/'+this.adId,{}).then(function(response){
                     me.adModal=0;
@@ -278,8 +255,8 @@
                 }).catch(function(error){
                     console.log(error);
                 });
-            },
-            desactivar(){
+            }, */
+        /*     desactivar(){
                 let me=this;
                 axios.put('api/Categorias/Desactivar/'+this.adId,{}).then(function(response){
                     me.adModal=0;
@@ -290,7 +267,7 @@
                 }).catch(function(error){
                     console.log(error);
                 });
-            }
+            } */
         }        
     }
 </script>

@@ -14,13 +14,13 @@
     "vuex": "^3.0.1"
   },
   "devDependencies": {
-    "@babel/polyfill": "^7.0.0-beta.49",
+    "@babel/polyfill": "^7.12.1",
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
-    "babel-plugin-transform-imports": "^1.4.1",
-    "stylus": "^0.54.5",
-    "stylus-loader": "^3.0.1",
-    "vue-cli-plugin-vuetify": "^0.1.6",
+    "babel-plugin-transform-imports": "^2.0.0",
+    "stylus": "^0.59.0",
+    "stylus-loader": "^7.1.0",
+    "vue-cli-plugin-vuetify": "^2.5.8",
     "vue-template-compiler": "^2.5.17"
   },
   "postcss": {
