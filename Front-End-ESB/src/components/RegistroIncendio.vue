@@ -25,11 +25,12 @@
                                     <v-text-field v-model="direccion" label="Direccion"></v-text-field>
                                 </v-flex>
                                 <v-flex xs12 sm12 md12>
-                                    <v-text-field v-model="bomberoCargo" label="BomberoCargo"></v-text-field>
+                                        <v-select v-model="idBomberoCargo" :items="clientes" label="Bombero a Cargo">
+                                        </v-select>
                                 </v-flex>
-                                <v-flex xs12 sm12 md12>
+                             <!--    <v-flex xs12 sm12 md12>
                                     <v-text-field type="date" v-model="fechaCreacion" label="FechaCreacion"></v-text-field>
-                                </v-flex>
+                                </v-flex> -->
                                 <v-flex xs12 sm12 md12 v-show="valida">
                                     <div class="red--text" v-for="v in validaMensaje" :key="v" v-text="v">
                                     </div>
@@ -94,7 +95,10 @@
                 id: '',
                 direccion: '',
                 bomberoCargo: '',
+                idBomberoCargo:'',
+                clientes:[],
                 fechaCreacion: '',
+                selectedBombero: null,
                 valida: 0,
                 validaMensaje:[],
                 adModal: 0,
@@ -117,6 +121,7 @@
 
         created () {
             this.listar();
+            this.select();
         },
         methods:{
             listar(){
@@ -164,9 +169,9 @@
                     //Código para guardar
                     let me=this;
                     axios.put(`api/RegistroIncendios?id=${this.id}`,{
-                        'id':me.id, 
+                  /*       'id':me.id, */ 
                         'direccion': me.direccion,
-                        'idBomberoCargo': me.idBomberoCargo                
+                        'idBomberoCargo': me.idBomberoCargo               
                     }).then(function(response){
                         me.close();
                         me.listar();
@@ -178,9 +183,8 @@
                     //Código para guardar
                     let me=this;
                     axios.post('api/RegistroIncendios',{
-                        'nombre': me.nombre,
-                        'apellido': me.apellido,
-                        'fechaNacimiento': me.fechaNacimiento
+                        'direccion': me.direccion,
+                        'idBomberoCargo': me.idBomberoCargo 
                     }).then(function(response){
                         me.close();
                         me.listar();
@@ -190,11 +194,24 @@
                     });
                 }
             },
+            select(){
+                let me=this;
+                var BomberoArray=[];
+                axios.get('api/Bomberos').then(function(response){
+                    BomberoArray=response.data.data;
+                    console.log(response.data.data);
+                    BomberoArray.map(function(x){
+                        me.clientes.push({text: x.nombre,value:x.id});
+                    });
+                }).catch(function(error){
+                    console.log(error);
+                });
+            },
             validar(){
                 this.valida=0;
                 this.validaMensaje=[];
 
-                if (this.nombre.length<3 || this.nombre.length>50){
+                if (this.direccion.length<3 || this.direccion.length>50){
                     this.validaMensaje.push("El nombre debe tener más de 3 caracteres y menos de 50 caracteres");
                 }
                 if (this.validaMensaje.length){

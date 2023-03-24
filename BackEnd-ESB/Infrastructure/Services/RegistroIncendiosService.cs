@@ -66,7 +66,7 @@ namespace ESB.Infrastructure.Services
             var obj = _mapper.Map<RegistroIncendios>(dto);
 
             obj.Id = objDb.Id;
-            obj.FechaCreacion =objDb.FechaCreacion;
+            obj.FechaCreacion = objDb.FechaCreacion;
 
             return new Response<RegistroIncendiosVm>(_mapper.Map<RegistroIncendiosVm>(await _RegistroIncendiosRepo.UpdateAsync(obj)));
         }

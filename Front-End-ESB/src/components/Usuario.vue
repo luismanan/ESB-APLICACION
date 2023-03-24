@@ -20,40 +20,27 @@
                 
                             <v-card-text>
                             <v-container grid-list-md>
-                                <v-layout wrap>
-                                <v-flex xs12 sm6 md6>
-                                    <v-text-field v-model="nombre" label="Nombre">
-                                    </v-text-field>
+                                <v-layout wrap>                          
+                                <v-flex xs12 sm12 md12>
+                                    <v-text-field v-model="nombre" label="nombre"></v-text-field>
                                 </v-flex>
-                                <v-flex xs12 sm6 md6>
-                                    <v-select v-model="idrol"
-                                    :items="roles" label="Rol">
-                                    </v-select>
+                                <v-flex xs12 sm12 md12>
+                                    <v-text-field v-model="apellido" label="apellido"></v-text-field>
                                 </v-flex>
-                                <v-flex xs12 sm6 md6>
-                                    <v-select v-model="tipo_documento"
-                                    :items="documentos" label="Tipo Documento">
-                                    </v-select>
+                                <v-flex xs12 sm12 md12>
+                                    <v-text-field v-model="correoElectronico" label="correoElectronico"></v-text-field>
                                 </v-flex>
-                                <v-flex xs12 sm6 md6>
-                                    <v-text-field v-model="num_documento" label="Número Documento">
-                                    </v-text-field>
+                                <v-flex xs12 sm12 md12>
+                                    <v-text-field v-model="contraseña" label="contraseña"></v-text-field>
                                 </v-flex>
-                                <v-flex xs12 sm6 md6>
-                                    <v-text-field v-model="direccion" label="Dirección">
-                                    </v-text-field>
+                                <v-flex xs12 sm12 md12>
+                                    <v-text-field v-model="claveSeguridad" label="claveSeguridad"></v-text-field>
                                 </v-flex>
-                                <v-flex xs12 sm6 md6>
-                                    <v-text-field v-model="telefono" label="Teléfono">
-                                    </v-text-field>
+                                <v-flex xs12 sm12 md12>
+                                    <v-text-field v-model="fechaCreacion" label="fechaCreacion"></v-text-field>
                                 </v-flex>
-                                <v-flex xs12 sm6 md6>
-                                    <v-text-field v-model="email" label="Email">
-                                    </v-text-field>
-                                </v-flex>
-                                <v-flex xs12 sm6 md6>
-                                    <v-text-field type="password" v-model="password" label="Password">
-                                    </v-text-field>
+                                <v-flex xs12 sm12 md12>
+                                    <v-text-field v-model="ultimoAcceso" label="ultimoAcceso"></v-text-field>
                                 </v-flex>
                                 <v-flex xs12 sm12 md12 v-show="valida">
                                     <div class="red--text" v-for="v in validaMensaje" :key="v" v-text="v">
@@ -68,31 +55,6 @@
                                 <v-btn color="blue darken-1" flat @click.native="close">Cancelar</v-btn>
                                 <v-btn color="blue darken-1" flat @click.native="guardar">Guardar</v-btn>
                             </v-card-actions>
-                        </v-card>
-                    </v-dialog>
-                    <v-dialog v-model="adModal" max-width="290">
-                        <v-card>
-                            <v-card-title class="headline" v-if="adAccion==1">¿Activar Item?</v-card-title>
-                            <v-card-title class="headline" v-if="adAccion==2">¿Desactivar Item?</v-card-title>
-                            <v-card-text>
-                                Estás a punto de 
-                                <span v-if="adAccion==1">Activar </span>
-                                <span v-if="adAccion==2">Desactivar </span>
-                                el ítem {{ adNombre }}
-                            </v-card-text>
-                            <v-card-actions>
-                                <v-spacer></v-spacer>
-                                <v-btn color="green darken-1" flat="flat" @click="activarDesactivarCerrar">
-                                    Cancelar
-                                </v-btn>
-                                <v-btn v-if="adAccion==1" color="orange darken-4" flat="flat" @click="activar">
-                                    Activar
-                                </v-btn>
-                                <v-btn v-if="adAccion==2" color="orange darken-4" flat="flat" @click="desactivar">
-                                    Desactivar
-                                </v-btn>
-                            </v-card-actions>
-
                         </v-card>
                     </v-dialog>
                 </v-toolbar>
@@ -111,38 +73,16 @@
                         >
                         edit
                         </v-icon>
-                        <template v-if="props.item.condicion">
-                            <v-icon
-                            small
-                            @click="activarDesactivarMostrar(2,props.item)"
-                            >
-                            block
-                            </v-icon>
-                        </template>
-                        <template v-else>
-                            <v-icon
-                            small
-                            @click="activarDesactivarMostrar(1,props.item)"
-                            >
-                            check
-                            </v-icon>
-                        </template>
                     </td>
+                    <td>{{ props.item.id }}</td>
                     <td>{{ props.item.nombre }}</td>
-                    <td>{{ props.item.rol }}</td>
-                    <td>{{ props.item.tipo_documento }}</td>
-                    <td>{{ props.item.num_documento }}</td>
-                    <td>{{ props.item.direccion }}</td>
-                    <td>{{ props.item.telefono }}</td>
-                    <td>{{ props.item.email }}</td>
-                    <td>
-                        <div v-if="props.item.condicion">
-                            <span class="blue--text">Activo</span>
-                        </div>
-                        <div v-else>
-                            <span class="red--text">Inactivo</span>
-                        </div>
-                    </td>
+                    <td>{{ props.item.apellido }}</td>
+                    <td>{{ props.item.correoElectronico }}</td>
+                   <!--  <td>{{ props.item.contraseña }}</td>
+                    <td>{{ props.item.claveSeguridad }}</td> -->
+                    <td>{{ props.item.fechaCreacion }}</td>
+                    <td>{{ props.item.ultimoAcceso }}</td>
+                    <td>{{ props.item.estado }}</td>
                 </template>
                 <template slot="no-data">
                 <v-btn color="primary" @click="listar">Resetear</v-btn>
@@ -159,32 +99,29 @@
                 usuarios:[],                
                 dialog: false,
                 headers: [
-                    { text: 'Opciones', value: 'opciones', sortable: false },
-                    { text: 'Nombre', value: 'nombre' },
-                    { text: 'Rol', value: 'rol' },
-                    { text: 'Tipo Documento', value: 'tipo_documento' },
-                    { text: 'Número Documento', value: 'num_documento', sortable: false  },
-                    { text: 'Dirección', value: 'direccion', sortable: false  },
-                    { text: 'Teléfono', value: 'telefono', sortable: false  },
-                    { text: 'Email', value: 'email', sortable: false  },
-                    { text: 'Estado', value: 'condicion', sortable: false  }                
+                    { text: 'Opciones', value: 'opciones', sortable: false }, 
+                    { text: 'Id', value: 'id' },
+                    { text: 'nombre', value: 'nombre' },    
+                    { text: 'apellido', value: 'apellido' },
+                    { text: 'correoElectronico', value: 'correoElectronico' },
+                  /*   { text: 'contraseña', value: 'contraseña' },
+                    { text: 'claveSeguridad', value: 'claveSeguridad' }, */
+                    { text: 'fechaCreacion', value: 'fechaCreacion' },
+                    { text: 'ultimoAcceso', value: 'ultimoAcceso' },
+                    { text: 'estado', value: 'estado' },                     
                 ],
                 search: '',
                 editedIndex: -1,
                 id: '',
-                idrol:'',
-                roles:[                   
-                ],
-                nombre:'',
-                tipo_documento: '',
-                documentos: ['DNI','RUC','PASAPORTE','CEDULA'],
-                num_documento: '',
-                direccion: '',
-                telefono: '',
-                email: '',
-                password:'',
-                actPassword:false,
-                passwordAnt:'',
+                nombre: '',
+                apellido: '',
+                correoElectronico: '',
+                contraseña: '',
+                contraseña: '',
+                claveSeguridad: '',
+                fechaCreacion: '',
+                ultimoAcceso: '',
+                estado: '',
                 valida: 0,
                 validaMensaje:[],
                 adModal: 0,
@@ -195,7 +132,7 @@
         },
         computed: {
             formTitle () {
-                return this.editedIndex === -1 ? 'Nuevo usuario' : 'Actualizar usuario'
+                return this.editedIndex === -1 ? 'Nuevo Usuario' : 'Actualizar Usuario'
             }
         },
 
@@ -207,60 +144,40 @@
 
         created () {
             this.listar();
-            this.select();
         },
         methods:{
             listar(){
                 let me=this;
-                axios.get('api/Usuarios/Listar').then(function(response){
+                axios.get('api/Usuario').then(function(response){
                     //console.log(response);
-                    me.usuarios=response.data;
-                }).catch(function(error){
-                    console.log(error);
-                });
-            },
-            select(){
-                let me=this;
-                var rolesArray=[];
-                axios.get('api/Roles/Select').then(function(response){
-                    rolesArray=response.data;
-                    rolesArray.map(function(x){
-                        me.roles.push({text: x.nombre,value:x.idrol});
-                    });
+                    me.usuarios=response.data.data;
+                    console.log(data.data);
                 }).catch(function(error){
                     console.log(error);
                 });
             },
             editItem (item) {
-                this.id=item.idusuario;
-                this.idrol=item.idrol;
+                this.id=item.id;
                 this.nombre=item.nombre;
-                this.tipo_documento=item.tipo_documento;
-                this.num_documento=item.num_documento;
-                this.direccion=item.direccion;
-                this.telefono=item.telefono;
-                this.email=item.email;
-                this.password=item.password_hash;
-                this.passwordAnt=item.password_hash;
+                this.apellido=item.apellido;
+                this.correoElectronico=item.correoElectronico;
+                this.contraseña=item.contraseña;
                 this.editedIndex=1;
                 this.dialog = true
             },
+
+            deleteItem (item) {
+                const index = this.desserts.indexOf(item)
+                confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1)
+            },
+
             close () {
                 this.dialog = false;
                 this.limpiar();
             },
             limpiar(){
                 this.id="";
-                this.idrol="";
-                this.nombre="";
-                this.tipo_documento="";
-                this.num_documento="";
-                this.direccion="";
-                this.telefono="";
-                this.email="";
-                this.password="";
-                this.passwordAnt="";
-                this.actPassword=false;
+                this.nombreRoles="";
                 this.editedIndex=-1;
             },
             guardar () {
@@ -271,20 +188,9 @@
                     //Código para editar
                     //Código para guardar
                     let me=this;
-                    if (me.password!=me.passwordAnt){
-                        me.actPassword=true;
-                    }
-                    axios.put('api/Usuarios/Actualizar',{
-                        'idusuario':me.id,
-                        'idrol':me.idrol,
-                        'nombre':me.nombre,
-                        'tipo_documento': me.tipo_documento,
-                        'num_documento':me.num_documento,
-                        'direccion':me.direccion,
-                        'telefono': me.telefono,
-                        'email':me.email,
-                        'password':me.password,
-                        'act_password':me.actPassword                        
+                    axios.put(`api/Roles?id=${this.id}`,{
+                        'id':me.id, 
+                        'nombreRoles': me.nombreRoles,
                     }).then(function(response){
                         me.close();
                         me.listar();
@@ -295,15 +201,8 @@
                 } else {
                     //Código para guardar
                     let me=this;
-                    axios.post('api/Usuarios/Crear',{
-                        'idrol':me.idrol,
-                        'nombre':me.nombre,
-                        'tipo_documento': me.tipo_documento,
-                        'num_documento':me.num_documento,
-                        'direccion':me.direccion,
-                        'telefono': me.telefono,
-                        'email':me.email,
-                        'password':me.password
+                    axios.post('api/Roles',{
+                        'nombreRoles': me.nombreRoles,
                     }).then(function(response){
                         me.close();
                         me.listar();
@@ -317,21 +216,8 @@
                 this.valida=0;
                 this.validaMensaje=[];
 
-                if (this.nombre.length<3 || this.nombre.length>100){
-                    this.validaMensaje.push("El nombre debe tener más de 3 caracteres y menos de 100 caracteres.");
-                }
-                if (!this.idrol){
-                    this.validaMensaje.push("Seleccione un rol.");
-                }
-                if (!this.tipo_documento){
-                    this.validaMensaje.push("Seleccione un tipo documento.");
-                }
-
-                if (!this.email){
-                    this.validaMensaje.push("Ingrese el email del usuario.");
-                }
-                if (!this.password){
-                    this.validaMensaje.push("Ingrese el password del usuario.");
+                if (this.nombreRoles.length<3 || this.nombreRoles.length>50){
+                    this.validaMensaje.push("El nombre debe tener más de 3 caracteres y menos de 50 caracteres");
                 }
                 if (this.validaMensaje.length){
                     this.valida=1;
@@ -340,8 +226,8 @@
             },
             activarDesactivarMostrar(accion,item){
                 this.adModal=1;
-                this.adNombre=item.nombre;
-                this.adId=item.idusuario;                
+                this.adNombre=item.nombreRoles;
+                this.adId=item.id;                
                 if (accion==1){
                     this.adAccion=1;
                 }
@@ -355,30 +241,6 @@
             activarDesactivarCerrar(){
                 this.adModal=0;
             },
-            activar(){
-                let me=this;
-                axios.put('api/Usuarios/Activar/'+this.adId,{}).then(function(response){
-                    me.adModal=0;
-                    me.adAccion=0;
-                    me.adNombre="";
-                    me.adId="";
-                    me.listar();                       
-                }).catch(function(error){
-                    console.log(error);
-                });
-            },
-            desactivar(){
-                let me=this;
-                axios.put('api/Usuarios/Desactivar/'+this.adId,{}).then(function(response){
-                    me.adModal=0;
-                    me.adAccion=0;
-                    me.adNombre="";
-                    me.adId="";
-                    me.listar();                       
-                }).catch(function(error){
-                    console.log(error);
-                });
-            }
         }        
     }
 </script>
