@@ -221,7 +221,7 @@
             },
             activarDesactivarMostrar(accion,item){
                 this.adModal=1;
-                this.adNombre=item.nombre;
+                this.adNombre=item.direccion;
                 this.adId=item.id;                
                 if (accion==1){
                     this.adAccion=1;
